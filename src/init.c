@@ -20,16 +20,16 @@
 #include "modreg.h"
 #include "nls.h"
 #include "port.h"
-#include "stats.h"
-#include "statsR.h"
-#include "ts.h"
+// #include "stats.h"
+// #include "statsR.h"
+// #include "ts.h"
 #include <R_ext/Rdynload.h>
 #include <R_ext/Visibility.h>
 
 #define C_DEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static const R_CMethodDef CEntries[]  = {
-    C_DEF(loess_raw, 24),
+/*    C_DEF(loess_raw, 24),
     C_DEF(loess_dfit, 13),
     C_DEF(loess_dfitse, 16),
     C_DEF(loess_ifit, 8),
@@ -39,7 +39,7 @@ static const R_CMethodDef CEntries[]  = {
     C_DEF(HoltWinters, 17),
     C_DEF(kmeans_Lloyd, 9),
     C_DEF(kmeans_MacQueen, 9),
-    C_DEF(rcont2,  8),
+    C_DEF(rcont2,  8), */
     {NULL, NULL, 0}
 };
 
@@ -58,12 +58,12 @@ static const R_CMethodDef CEntries[]  = {
 #define CALLDEF_RAND3(name) CALLDEF_DO(name, 4)
 
 static const R_CallMethodDef CallEntries[] = {
-    CALLDEF(cutree, 2),
+/*    CALLDEF(cutree, 2),
     CALLDEF(isoreg, 1),
-    CALLDEF(monoFC_m, 2),
-    CALLDEF(numeric_deriv, 6),
+    CALLDEF(monoFC_m, 2), */
+    CALLDEF(numeric_deriv, 7),
     CALLDEF(nls_iter, 3),
-    CALLDEF(setup_starma, 8),
+/*    CALLDEF(setup_starma, 8),
     CALLDEF(free_starma, 1),
     CALLDEF(set_trans, 2),
     CALLDEF(arma0fa, 2),
@@ -86,11 +86,11 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(ARIMA_CSS, 6),
     CALLDEF(TSconv, 2),
     CALLDEF(getQ0, 2),
-    CALLDEF(getQ0bis, 3),
+    CALLDEF(getQ0bis, 3), */
     CALLDEF(port_ivset, 3),
     CALLDEF(port_nlminb, 9),
     CALLDEF(port_nlsb, 7),
-    CALLDEF(logit_link, 1),
+/*    CALLDEF(logit_link, 1),
     CALLDEF(logit_linkinv, 1),
     CALLDEF(logit_mu_eta, 1),
     CALLDEF(binomial_dev_resids, 3),
@@ -246,7 +246,7 @@ static const R_CallMethodDef CallEntries[] = {
 
     CALLDEF_RAND3(rhyper),
 
-    CALLDEF_DO(rmultinom, 3),
+    CALLDEF_DO(rmultinom, 3), */
 
     {NULL, NULL, 0}
 };
@@ -270,18 +270,19 @@ static const R_FortranMethodDef FortEntries[] = {
     {"rbart",  (DL_FUNC) &F77_NAME(rbart),  20},
     {"bvalus", (DL_FUNC) &F77_NAME(bvalus),  7},
     {"supsmu", (DL_FUNC) &F77_NAME(supsmu), 10},
-    {"hclust", (DL_FUNC) &F77_NAME(hclust), 10},
+/*    {"hclust", (DL_FUNC) &F77_NAME(hclust), 10},
     {"hcass2", (DL_FUNC) &F77_NAME(hcass2),  6},
     {"kmns",   (DL_FUNC) &F77_NAME(kmns),   17},
     {"eureka", (DL_FUNC) &F77_NAME(eureka),  6},
-    {"stl",    (DL_FUNC) &F77_NAME(stl),    18},
+    {"stl",    (DL_FUNC) &F77_NAME(stl),    18}, */
     {NULL, NULL, 0}
 };
 
 #define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 // These argument counts are not checked
+
 static const R_ExternalMethodDef ExtEntries[] = {
-    EXTDEF(compcases, -1),
+/*    EXTDEF(compcases, -1),
     EXTDEF(doD, 2),
     EXTDEF(deriv, 5),
     EXTDEF(modelframe, 8),
@@ -296,12 +297,12 @@ static const R_ExternalMethodDef ExtEntries[] = {
     EXTDEF(call_dqagi, 7),
 
     {"signrank_free", (DL_FUNC) &stats_signrank_free, 0},
-    {"wilcox_free", (DL_FUNC) &stats_wilcox_free, 0},
+    {"wilcox_free", (DL_FUNC) &stats_wilcox_free, 0}, */
     {NULL, NULL, 0}
 };
 
 
-void attribute_visible R_init_stats(DllInfo *dll)
+void attribute_visible R_init_nlspkg(DllInfo *dll)
 {
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
@@ -310,5 +311,5 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_RegisterCCallable("stats", "nlminb_iterate", (DL_FUNC) nlminb_iterate);
     R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC) nlsb_iterate);
     R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC) Rf_divset);
-    R_RegisterCCallable("stats", "rcont2", (DL_FUNC) rcont2);
+//    R_RegisterCCallable("stats", "rcont2", (DL_FUNC) rcont2);
 }

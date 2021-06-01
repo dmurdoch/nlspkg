@@ -26,7 +26,8 @@ numericDeriv <- function(expr, theta, rho = parent.frame(), dir = 1,
 {
     dir <- rep_len(dir, length(theta))
     stopifnot(is.finite(eps), eps > 0)
-    val <- .Call(C_numeric_deriv, expr, theta, rho, dir, eps, central) ## ../src/nls.c
+    rho1 <- new.env(FALSE, rho, 0)
+    val <- .Call(C_numeric_deriv, expr, theta, rho, dir, eps, central, rho1) ## ../src/nls.c
     if (!is.null(d <- dim(val))) {
         if(d[length(d)] == 1L)
             d <- d[-length(d)]

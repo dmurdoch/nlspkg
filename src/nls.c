@@ -32,6 +32,8 @@
 #include <Rinternals.h>
 #include "nls.h"
 
+#include "internals.h"
+
 #ifndef MIN
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #endif
@@ -278,7 +280,8 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg)
  *  Returns: ans
  */
 SEXP
-numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr)
+numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr,
+              SEXP rho1)
 {
     if(!isString(theta))
 	error(_("'theta' should be of type character"));
@@ -297,11 +300,11 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr)
     Rboolean central = asLogical(centr);
     if(central == NA_LOGICAL)
 	error(_("'central' is NA, but must be TRUE or FALSE"));
-    SEXP rho1 = PROTECT(R_NewEnv(rho, FALSE, 0));
-    nprot++;
+//    SEXP rho1 = PROTECT(R_NewEnv(rho, FALSE, 0));
+//    nprot++;
     SEXP
 	pars = PROTECT(allocVector(VECSXP, LENGTH(theta))),
-	ans  = PROTECT(duplicate(eval(expr, rho1)));
+        ans  = PROTECT(duplicate(eval(expr, rho1)));
     double *rDir = REAL(dir),  *res = NULL; // -Wall
 #define CHECK_FN_VAL(_r_, _ANS_) do {					\
     if(!isReal(_ANS_)) {						\

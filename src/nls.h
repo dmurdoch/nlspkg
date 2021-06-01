@@ -25,6 +25,6 @@
 #endif
 
 SEXP nls_iter(SEXP m, SEXP control, SEXP doTraceArg);
-SEXP numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr);
+SEXP numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr, SEXP rho1);
 
 
